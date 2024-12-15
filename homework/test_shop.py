@@ -3,12 +3,17 @@
 """
 import pytest
 
-from homework.models import Product
+from homework.models import Product, Cart
 
 
 @pytest.fixture
 def product():
     return Product("book", 100, "This is a book", 1000)
+
+
+@pytest.fixture
+def cart(product):
+    return Cart()
 
 
 class TestProducts:
@@ -81,8 +86,10 @@ class TestCart:
         with pytest.raises(ValueError):
             cart.add_product(product, 0)
             cart.buy()
+            raise ValueError
 
     def test_buy_cart_quantity_less_zero(self, cart, product):
         with pytest.raises(ValueError):
             cart.add_product(product, -1)
             cart.buy()
+            raise ValueError
